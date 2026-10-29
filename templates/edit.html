@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Patient</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef4ff;
+            padding: 25px 16px;
+        }
+
+        main {
+            max-width: 650px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        h1 { color: #174ea6; }
+
+        label {
+            display: block;
+            margin-top: 14px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #bcc9dc;
+            border-radius: 6px;
+        }
+
+        button, a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 11px 15px;
+            border: none;
+            border-radius: 6px;
+            background: #1769d2;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .message {
+            padding: 12px;
+            background: #ffe5e5;
+            color: #a11b1b;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Edit Patient</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+        <label for="full_name">Full Name</label>
+        <input id="full_name" name="full_name"
+               value="{{ patient.full_name }}" required>
+
+        <label for="date_of_birth">Date of Birth (DD/MM/YYYY)</label>
+        <input id="date_of_birth" name="date_of_birth"
+               value="{{ patient.date_of_birth }}"
+               pattern="\d{2}/\d{2}/\d{4}" required>
+
+        <label for="email">Email Address</label>
+        <input id="email" type="email" name="email"
+               value="{{ patient.email }}" required>
+
+        <label for="glucose">Glucose</label>
+        <input id="glucose" type="number" name="glucose"
+               value="{{ patient.glucose }}" min="0.000001"
+               step="any" required>
+
+        <label for="haemoglobin">Haemoglobin</label>
+        <input id="haemoglobin" type="number" name="haemoglobin"
+               value="{{ patient.haemoglobin }}" min="0.000001"
+               step="any" required>
+
+        <label for="cholesterol">Cholesterol</label>
+        <input id="cholesterol" type="number" name="cholesterol"
+               value="{{ patient.cholesterol }}" min="0.000001"
+               step="any" required>
+
+        <button type="submit">Save Changes</button>
+        <a href="{{ url_for('home') }}">Cancel</a>
+    </form>
+</main>
+</body>
+</html>
